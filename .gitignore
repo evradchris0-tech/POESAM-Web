@@ -1,4 +1,4 @@
-node_modules
+﻿node_modules
 .next
 out
 .env*.local
@@ -6,7 +6,7 @@ out
 *.log
 *.tsbuildinfo
 
-# Large media — host separately
-public/*.mp4
-public/*.mov
+# Large media â€” host separately
+
+
 public/*.zip
