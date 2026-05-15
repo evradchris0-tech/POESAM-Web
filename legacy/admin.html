@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin · TradeFlow Africa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  body { background: var(--surface); }
+
+  /* Layout */
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .side {
+    background: #fff;
+    border-right: 1px solid var(--border);
+    padding: 20px 14px;
+    display: flex; flex-direction: column;
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto;
+  }
+  .side .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 15px;
+    padding: 6px 10px; margin-bottom: 4px;
+  }
+  .side .brand .logo-mark { width: 26px; height: 26px; border-radius: 6px; background: var(--c-accent); display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 13px; }
+  .side .scope {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-400);
+    padding: 12px 10px 6px;
+    margin-top: 8px;
+  }
+  .side nav { display: flex; flex-direction: column; gap: 1px; }
+  .side a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: var(--r-sm);
+    font-size: 13.5px; font-weight: 500;
+    color: var(--ink-700);
+  }
+  .side a:hover { background: var(--ink-100); }
+  .side a.active { background: var(--navy-100); color: var(--c-primary); font-weight: 600; }
+  .side a svg { width: 18px; height: 18px; flex: none; opacity: 0.85; }
+  .side a .count {
+    margin-left: auto;
+    font-size: 11px; font-weight: 600;
+    background: var(--ink-100); color: var(--ink-700);
+    padding: 2px 8px; border-radius: var(--r-pill);
+  }
+  .side a.active .count { background: var(--c-primary); color: #fff; }
+  .side a .count.danger { background: var(--danger-100); color: var(--danger-700); }
+  .side .divider { height: 1px; background: var(--border); margin: 12px 6px; }
+  .side .user {
+    margin-top: auto; padding: 10px;
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    background: var(--surface);
+  }
+  .side .user .avatar { width: 32px; height: 32px; font-size: 11px; }
+  .side .user .meta { font-size: 12.5px; font-weight: 600; line-height: 1.2; }
+  .side .user .meta small { display: block; font-size: 11px; color: var(--ink-500); font-weight: 400; margin-top: 2px; }
+
+  /* Main */
+  .main { display: flex; flex-direction: column; min-width: 0; }
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 32px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    height: 60px;
+    position: sticky; top: 0; z-index: 5;
+  }
+  .topbar .crumbs {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink-500);
+  }
+  .topbar .crumbs b { color: var(--ink-900); font-weight: 600; }
+  .topbar .crumbs .sep { color: var(--ink-300); }
+  .topbar .search {
+    margin-left: 24px;
+    flex: 1; max-width: 360px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 12px; height: 36px;
+    background: var(--surface); border-radius: var(--r-md);
+    border: 1px solid transparent;
+  }
+  .topbar .search:focus-within { border-color: var(--c-primary); background: #fff; }
+  .topbar .search input {
+    flex: 1; border: 0; background: transparent; outline: 0;
+    font-size: 13px; color: var(--ink-900); font-family: inherit;
+  }
+  .topbar .search svg { color: var(--ink-400); }
+  .topbar .right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+  .topbar .icon-btn {
+    width: 36px; height: 36px; border-radius: var(--r-md);
+    border: 0; background: var(--surface);
+    display: grid; place-items: center;
+    color: var(--ink-700);
+    position: relative;
+  }
+  .topbar .icon-btn:hover { background: var(--ink-100); }
+  .topbar .icon-btn .pip {
+    position: absolute; top: 8px; right: 8px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--danger-500);
+    border: 2px solid var(--surface);
+  }
+
+  /* Content */
+  .content { padding: 28px 32px 64px; }
+  .page-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 24px; gap: 16px;
+  }
+  .page-head h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 4px; }
+  .page-head p { color: var(--ink-500); font-size: 13.5px; margin: 0; }
+  .page-head .actions { display: flex; gap: 8px; }
+
+  /* KPI cards */
+  .kpis {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .kpi {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 96px;
+  }
+  .kpi .label {
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-500);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .kpi .label svg { width: 14px; height: 14px; opacity: 0.6; }
+  .kpi .value {
+    font-size: 28px; font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--ink-900);
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .value small { font-size: 14px; font-weight: 500; color: var(--ink-500); margin-left: 4px; }
+  .kpi .delta {
+    font-size: 11.5px; font-weight: 600;
+    color: var(--success-700);
+    display: inline-flex; align-items: center; gap: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .delta.danger { color: var(--danger-700); }
+  .kpi .delta.muted { color: var(--ink-500); }
+
+  /* Section heading */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 32px 0 14px;
+  }
+  .sec-h h3 { font-size: 14px; font-weight: 600; margin: 0; color: var(--ink-900); }
+  .sec-h .actions { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--ink-500); }
+  .sec-h .actions a { color: var(--c-primary); font-weight: 600; }
+
+  /* Two-col layout */
+  .two-col { display: grid; grid-template-columns: 1fr 380px; gap: 16px; }
+
+  /* Card */
+  .panel {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  .panel > .panel-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .panel-head h4 { font-size: 14px; font-weight: 600; margin: 0; }
+  .panel-head .meta { font-size: 12px; color: var(--ink-500); }
+
+  /* Chart minimaliste — Linear-style */
+  .chart-wrap { padding: 20px; }
+  .chart-legend {
+    display: flex; gap: 18px;
+    margin-bottom: 16px;
+    font-size: 12px; color: var(--ink-700);
+  }
+  .chart-legend .lg { display: inline-flex; gap: 8px; align-items: center; }
+  .chart-legend .lg::before {
+    content: ""; width: 10px; height: 2px; background: currentColor;
+  }
+  .lg-civ { color: var(--c-primary); }
+  .lg-sen { color: var(--c-accent); }
+  .lg-gab { color: #3B6D11; }
+
+  .chart-svg { width: 100%; height: 220px; }
+  .chart-svg .grid { stroke: var(--ink-200); stroke-width: 0.5; stroke-dasharray: 2 3; }
+  .chart-svg .axis { font-size: 10px; fill: var(--ink-400); font-family: var(--font-sans); }
+
+  /* Table */
+  table.tf {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.tf th {
+    text-align: left;
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--ink-400);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  table.tf td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-900);
+    vertical-align: middle;
+  }
+  table.tf tr:last-child td { border-bottom: 0; }
+  table.tf tr:hover td { background: var(--surface); }
+  table.tf .num { font-variant-numeric: tabular-nums; font-weight: 500; }
+  table.tf .id {
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 12px; color: var(--ink-700);
+    background: var(--surface);
+    padding: 2px 6px; border-radius: 4px;
+  }
+  table.tf .actions-cell { text-align: right; white-space: nowrap; }
+
+  .icon-pill {
+    width: 28px; height: 28px;
+    display: inline-grid; place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    background: #fff; color: var(--ink-700);
+    margin-left: 4px;
+  }
+  .icon-pill:hover { background: var(--ink-100); color: var(--ink-900); }
+
+  /* Risk dot */
+  .risk { display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+  .risk::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+  }
+  .risk.lo::before { background: var(--success-500); }
+  .risk.md::before { background: var(--warning-500); }
+  .risk.hi::before { background: var(--danger-500); }
+
+  /* Avatar+name cell */
+  .person { display: flex; align-items: center; gap: 10px; }
+  .person .avatar { width: 28px; height: 28px; font-size: 10px; }
+  .person .name { font-size: 13px; font-weight: 500; }
+  .person .name small { display: block; font-size: 11px; color: var(--ink-500); font-weight: 400; }
+
+  /* Alert list */
+  .alerts { padding: 4px 0; }
+  .alert-row {
+    display: flex; gap: 12px; padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .alert-row:last-child { border-bottom: 0; }
+  .alert-row .ico {
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    border-radius: var(--r-sm);
+    flex: none;
+  }
+  .alert-row .ico.danger { background: var(--danger-100); color: var(--danger-700); }
+  .alert-row .ico.warning { background: var(--warning-100); color: var(--warning-700); }
+  .alert-row .ico.info { background: var(--navy-100); color: var(--c-primary); }
+  .alert-row .body { flex: 1; }
+  .alert-row .body p { font-size: 13px; line-height: 1.45; margin: 0; color: var(--ink-900); }
+  .alert-row .body small { font-size: 11.5px; color: var(--ink-500); display: block; margin-top: 4px; }
+  .alert-row .body a { color: var(--c-primary); font-weight: 600; font-size: 12px; }
+
+  /* KYC view */
+  .kyc-grid { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+  .kyc-list .panel-head { background: #fff; }
+  .kyc-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .kyc-row:last-child { border-bottom: 0; }
+  .kyc-row .avatar { width: 40px; height: 40px; font-size: 13px; }
+  .kyc-row .info .name { font-size: 14px; font-weight: 600; }
+  .kyc-row .info .sub { font-size: 12px; color: var(--ink-500); margin-top: 2px; }
+  .kyc-row .docs { display: flex; gap: 8px; }
+  .kyc-row .doc {
+    font-size: 11px; padding: 3px 8px; border-radius: var(--r-pill);
+    background: var(--success-100); color: var(--success-700);
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .kyc-row .doc.missing { background: var(--danger-100); color: var(--danger-700); }
+  .kyc-row .actions { display: flex; gap: 6px; }
+  .btn-mini {
+    padding: 6px 12px;
+    font-size: 12px; font-weight: 600;
+    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+  }
+  .btn-validate { background: var(--success-500); color: #fff; }
+  .btn-validate:hover { background: var(--success-700); }
+  .btn-complete { background: #fff; color: var(--warning-700); border-color: var(--warning-500); }
+  .btn-reject { background: #fff; color: var(--danger-700); border-color: var(--danger-500); }
+
+  .stat-list { padding: 4px 0; }
+  .stat-list .row {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 13px;
+  }
+  .stat-list .row:last-child { border-bottom: 0; }
+  .stat-list .row b { font-size: 18px; font-variant-numeric: tabular-nums; }
+  .stat-list .row.success b { color: var(--success-700); }
+  .stat-list .row.warning b { color: var(--warning-700); }
+  .stat-list .row.danger b { color: var(--danger-700); }
+
+  /* Escrow detail rows */
+  .escrow-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto auto;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .escrow-row:last-child { border-bottom: 0; }
+  .escrow-row .icon-pill { margin: 0; }
+
+  /* Hide all view-pages by default; JS toggles */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Empty / placeholder */
+  .placeholder {
+    background: #fff; border: 1px dashed var(--border-strong);
+    border-radius: var(--r-md);
+    padding: 64px 24px; text-align: center;
+    color: var(--ink-500);
+  }
+  .placeholder h3 { font-size: 16px; font-weight: 600; color: var(--ink-900); margin: 0 0 8px; }
+  .placeholder p { font-size: 13px; margin: 0; }
+
+  /* RAG */
+  .rag-grid { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+  .feedback { font-size: 16px; }
+
+  .source-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 8px; border-radius: var(--r-sm);
+    background: var(--navy-100); color: var(--c-primary);
+    font-size: 11.5px; font-weight: 500;
+    border: 1px solid rgba(27,77,142,0.15);
+  }
+  .source-tag svg { width: 11px; height: 11px; opacity: 0.7; }
+
+  .confidence-bar {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  .confidence-bar .bar { width: 56px; height: 4px; border-radius: 2px; background: var(--ink-100); overflow: hidden; }
+  .confidence-bar .bar > div { height: 100%; background: var(--c-primary); }
+  .confidence-bar.warn .bar > div { background: var(--warning-500); }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="brand"><span class="logo-mark">T</span> TradeFlow Africa</div>
+    <div class="caption" style="padding: 0 10px; color: var(--ink-500); font-size: 11px; letter-spacing: 0.04em;">Backoffice · LA RUCHE</div>
+
+    <div class="scope">Supervision</div>
+    <nav>
+      <a href="#overview" data-view="overview" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Vue d'ensemble
+      </a>
+      <a href="#kyc" data-view="kyc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        Gestion KYC <span class="count danger">3</span>
+      </a>
+      <a href="#escrow" data-view="escrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg>
+        Supervision Escrow <span class="count">8</span>
+      </a>
+      <a href="#rag" data-view="rag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg>
+        Monitoring RAG
+      </a>
+      <a href="#fraud" data-view="fraud">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        Détection Fraude <span class="count danger">1</span>
+      </a>
+    </nav>
+
+    <div class="scope">Plateforme</div>
+    <nav>
+      <a href="#metrics" data-view="metrics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 20h18M5 16l4-6 4 4 6-9"/></svg>
+        Métriques
+      </a>
+      <a href="#users" data-view="users">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M21 19c0-2.5-1.7-4.5-4-4.9"/></svg>
+        Utilisateurs
+      </a>
+      <a href="#settings" data-view="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        Paramètres
+      </a>
+    </nav>
+
+    <div class="user">
+      <div class="avatar av-a">SF</div>
+      <div class="meta">Sarah Fombang<small>Admin · LA RUCHE</small></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <div class="crumbs">
+        <span>LA RUCHE</span>
+        <span class="sep">/</span>
+        <b id="crumb">Vue d'ensemble</b>
+      </div>
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input placeholder="Rechercher transaction, PME, document…" />
+      </div>
+      <div class="right">
+        <button class="icon-btn" title="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+          <span class="pip"></span>
+        </button>
+        <button class="icon-btn" title="Aide">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 4M12 17h.01"/></svg>
+        </button>
+        <a class="btn btn-primary btn-sm" href="index.html">↗ Landing publique</a>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ============== OVERVIEW ============== -->
+      <div class="view active" id="view-overview" data-screen-label="01 Overview">
+        <div class="page-head">
+          <div>
+            <h1>Vue d'ensemble</h1>
+            <p>Activité plateforme · 10 mai 2026 · 14h32</p>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost btn-sm">Filtre · 30 jours</button>
+            <button class="btn btn-primary btn-sm">Exporter rapport</button>
+          </div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="label">PME actives <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
+            <div class="value">47</div>
+            <div class="delta">↑ +12 ce mois</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Transactions actives <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h18M3 16h18"/><path d="M16 4l5 4-5 4M8 20l-5-4 5-4"/></svg></div>
+            <div class="value">8</div>
+            <div class="delta muted">3 corridors</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Volume escrow actif</div>
+            <div class="value">6,2<small>M FCFA</small></div>
+            <div class="delta">↑ +18% / mois précédent</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Revenus du mois</div>
+            <div class="value">2,84<small>M FCFA</small></div>
+            <div class="delta">↑ +24% MoM</div>
+          </div>
+          <div class="kpi">
+            <div class="label">KYC en attente</div>
+            <div class="value">3</div>
+            <div class="delta danger">2 dossiers > 48h</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Trust Score moyen</div>
+            <div class="value">74<small>/100</small></div>
+            <div class="delta">↑ +3 pts</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Alertes fraude actives</div>
+            <div class="value" style="color: var(--danger-500);">1</div>
+            <div class="delta danger">TF-2024-0091 · Risk 78</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Conversion Free → Pro</div>
+            <div class="value">18<small>%</small></div>
+            <div class="delta muted">— stable</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <div class="panel">
+              <div class="panel-head">
+                <h4>Volume de transactions · 30 derniers jours</h4>
+                <span class="meta">FCFA · par corridor</span>
+              </div>
+              <div class="chart-wrap">
+                <div class="chart-legend">
+                  <span class="lg lg-civ">CMR → CIV</span>
+                  <span class="lg lg-sen">CMR → SEN</span>
+                  <span class="lg lg-gab">CMR → GAB</span>
+                </div>
+                <svg class="chart-svg" viewBox="0 0 720 220" preserveAspectRatio="none">
+                  <!-- grid -->
+                  <g class="grid">
+                    <line x1="40" y1="20"  x2="720" y2="20"/>
+                    <line x1="40" y1="70"  x2="720" y2="70"/>
+                    <line x1="40" y1="120" x2="720" y2="120"/>
+                    <line x1="40" y1="170" x2="720" y2="170"/>
+                  </g>
+                  <!-- y axis labels -->
+                  <g class="axis">
+                    <text x="32" y="24" text-anchor="end">2,0M</text>
+                    <text x="32" y="74" text-anchor="end">1,5M</text>
+                    <text x="32" y="124" text-anchor="end">1,0M</text>
+                    <text x="32" y="174" text-anchor="end">0,5M</text>
+                    <text x="32" y="200" text-anchor="end">0</text>
+                  </g>
+                  <!-- x axis labels -->
+                  <g class="axis">
+                    <text x="60"  y="215">11/04</text>
+                    <text x="200" y="215">18/04</text>
+                    <text x="340" y="215">25/04</text>
+                    <text x="480" y="215">02/05</text>
+                    <text x="620" y="215">09/05</text>
+                  </g>
+                  <!-- CIV (navy) -->
+                  <path d="M 60 165 L 110 150 L 160 140 L 210 145 L 260 130 L 310 110 L 360 100 L 410 95 L 460 80 L 510 70 L 560 75 L 610 60 L 660 55 L 700 50"
+                        fill="none" stroke="#1B4D8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- SEN (orange) -->
+                  <path d="M 60 185 L 110 175 L 160 180 L 210 170 L 260 160 L 310 165 L 360 155 L 410 150 L 460 140 L 510 145 L 560 130 L 610 135 L 660 125 L 700 130"
+                        fill="none" stroke="#E87722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- GAB (green) -->
+                  <path d="M 60 175 L 110 170 L 160 165 L 210 155 L 260 145 L 310 135 L 360 130 L 410 125 L 460 110 L 510 100 L 560 95 L 610 85 L 660 80 L 700 70"
+                        fill="none" stroke="#3B6D11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="sec-h">
+              <h3>Transactions récentes</h3>
+              <div class="actions">
+                <a href="#escrow" data-view="escrow">Voir toutes →</a>
+              </div>
+            </div>
+            <div class="panel">
+              <table class="tf">
+                <thead>
+                  <tr><th>ID</th><th>Vendeur · Acheteur</th><th>Corridor</th><th>Montant</th><th>Statut</th><th>Risk</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="id">TF-2024-0847</span></td>
+                    <td><div class="person"><div class="avatar av-a">JM</div><div class="name">Jean-Paul Mboumba<small>→ Kouadio Marc</small></div></div></td>
+                    <td><span class="badge badge-navy">CMR → CIV</span></td>
+                    <td class="num">1 550 000 FCFA</td>
+                    <td><span class="badge badge-warning badge-dot">En transit</span></td>
+                    <td><span class="risk md">32</span></td>
+                    <td class="actions-cell"><button class="icon-pill" title="Voir">→</button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="id">TF-2024-0851</span></td>
+                    <td><div class="person"><div class="avatar av-b">HO</div><div class="name">Hawa Oumarou<small>→ Fatou Diallo</small></div></div></td>
+                    <td><span class="badge badge-navy">CMR → SEN</span></td>
+                    <td class="num">960 000 FCFA</td>
+                    <td><span class="badge badge-success badge-dot">Escrow confirmé</span></td>
+                    <td><span class="risk lo">18</span></td>
+                    <td class="actions-cell"><button class="icon-pill">→</button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="id">TF-2024-0863</span></td>
+                    <td><div class="person"><div class="avatar av-c">AB</div><div class="name">Albert Biya<small>→ Pierre Ondo</small></div></div></td>
+                    <td><span class="badge badge-navy">CMR → GAB</span></td>
+                    <td class="num">1 440 000 FCFA</td>
+                    <td><span class="badge badge-success badge-dot">Libération en cours</span></td>
+                    <td><span class="risk lo">12</span></td>
+                    <td class="actions-cell"><button class="icon-pill">→</button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="id">TF-2024-0871</span></td>
+                    <td><div class="person"><div class="avatar av-a">CM</div><div class="name">Coop. Mungo<small>→ Abi Food CI</small></div></div></td>
+                    <td><span class="badge badge-navy">CMR → CIV</span></td>
+                    <td class="num">880 000 FCFA</td>
+                    <td><span class="badge badge-warning badge-dot">En attente expédition</span></td>
+                    <td><span class="risk md">45</span></td>
+                    <td class="actions-cell"><button class="icon-pill">→</button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="id">TF-2024-0875</span></td>
+                    <td><div class="person"><div class="avatar av-b">GB</div><div class="name">GIC Bafang<small>→ Dakar Naturel</small></div></div></td>
+                    <td><span class="badge badge-navy">CMR → SEN</span></td>
+                    <td class="num">620 000 FCFA</td>
+                    <td><span class="badge badge-dot" style="background:var(--ink-100); color:var(--ink-700);">KYC en validation</span></td>
+                    <td><span class="risk lo">8</span></td>
+                    <td class="actions-cell"><button class="icon-pill">→</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <div class="panel-head"><h4>Alertes système</h4><span class="meta">Temps réel</span></div>
+              <div class="alerts">
+                <div class="alert-row">
+                  <div class="ico danger">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 22h20L12 2z"/><path d="M12 9v6M12 18h.01"/></svg>
+                  </div>
+                  <div class="body">
+                    <p><b>Fraude flaggée</b> · Transaction TF-2024-0091</p>
+                    <small>Risk Score 78/100 · Isolation Forest · Pattern d'escrow inhabituel</small>
+                    <a href="#fraud" data-view="fraud">Examiner →</a>
+                  </div>
+                </div>
+                <div class="alert-row">
+                  <div class="ico warning">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+                  </div>
+                  <div class="body">
+                    <p><b>3 KYC en attente</b> depuis plus de 48h</p>
+                    <small>Validations à traiter avant 16h00</small>
+                    <a href="#kyc" data-view="kyc">Voir la queue →</a>
+                  </div>
+                </div>
+                <div class="alert-row">
+                  <div class="ico info">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+                  </div>
+                  <div class="body">
+                    <p><b>Couverture RAG faible</b> · JO Sénégal Q1 2026</p>
+                    <small>3 questions sans chunks pertinents cette semaine</small>
+                    <a href="#rag" data-view="rag">Vérifier →</a>
+                  </div>
+                </div>
+                <div class="alert-row">
+                  <div class="ico info">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  </div>
+                  <div class="body">
+                    <p><b>Nouveau pilote</b> · Coop. Femmes Adamawa</p>
+                    <small>Onboarding terminé · CMR → SEN actif</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top: 16px;">
+              <div class="panel-head"><h4>Santé infrastructure</h4></div>
+              <div class="stat-list">
+                <div class="row success"><span>Supabase API</span><b>99,9%</b></div>
+                <div class="row success"><span>Claude Sonnet API</span><b>OK</b></div>
+                <div class="row success"><span>Orange Money sandbox</span><b>OK</b></div>
+                <div class="row warning"><span>AGL Logistics API</span><b>Lent</b></div>
+                <div class="row success"><span>pgvector RAG</span><b>247 q/mois</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== KYC ============== -->
+      <div class="view" id="view-kyc" data-screen-label="02 KYC">
+        <div class="page-head">
+          <div>
+            <h1>Gestion KYC</h1>
+            <p>3 dossiers en attente · 2 dépassent le SLA de 24h</p>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost btn-sm">Filtre · Tous types</button>
+            <button class="btn btn-primary btn-sm">Historique complet</button>
+          </div>
+        </div>
+
+        <div class="kyc-grid">
+          <div>
+            <div class="panel kyc-list">
+              <div class="panel-head">
+                <h4>Queue de validation</h4>
+                <span class="meta">Triés par ancienneté</span>
+              </div>
+              <div class="kyc-row">
+                <div class="avatar av-b">NP</div>
+                <div class="info">
+                  <div class="name">Nkemdirim Pauline</div>
+                  <div class="sub">PME · Yaoundé · Plantain & dérivés · Soumis il y a 2h</div>
+                </div>
+                <div class="docs">
+                  <span class="doc">RCCM ✓</span>
+                  <span class="doc">ID ✓</span>
+                  <span class="doc">Selfie ✓</span>
+                </div>
+                <div class="actions">
+                  <button class="btn-mini btn-validate">Valider</button>
+                  <button class="btn-mini btn-complete">Demander complément</button>
+                  <button class="btn-mini btn-reject">Rejeter</button>
+                </div>
+              </div>
+              <div class="kyc-row">
+                <div class="avatar av-c">TI</div>
+                <div class="info">
+                  <div class="name">Tchangani Ibrahim</div>
+                  <div class="sub">Agent Coop · Ngaoundéré · Soumis il y a 18h <span style="color: var(--warning-700); font-weight: 600;">· SLA dépassé</span></div>
+                </div>
+                <div class="docs">
+                  <span class="doc">RCCM ✓</span>
+                  <span class="doc">ID ✓</span>
+                  <span class="doc missing">Selfie ⨯</span>
+                </div>
+                <div class="actions">
+                  <button class="btn-mini btn-complete">Demander complément</button>
+                  <button class="btn-mini btn-reject">Rejeter</button>
+                </div>
+              </div>
+              <div class="kyc-row">
+                <div class="avatar av-a">CF</div>
+                <div class="info">
+                  <div class="name">Chemeli Food Ltd</div>
+                  <div class="sub">Acheteur Kenya · Soumis il y a 3h</div>
+                </div>
+                <div class="docs">
+                  <span class="doc">Cert. Inc. ✓</span>
+                  <span class="doc">ID Director ✓</span>
+                </div>
+                <div class="actions">
+                  <button class="btn-mini btn-validate">Valider</button>
+                  <button class="btn-mini btn-complete">Demander complément</button>
+                  <button class="btn-mini btn-reject">Rejeter</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-h"><h3>Historique du jour</h3><span style="color: var(--ink-500); font-size: 12px;">5 validations</span></div>
+            <div class="panel">
+              <table class="tf">
+                <thead><tr><th>Heure</th><th>Profil</th><th>Type</th><th>Action</th><th>Validateur</th></tr></thead>
+                <tbody>
+                  <tr><td class="num">14:08</td><td>Mbarga Solange</td><td>PME · Douala</td><td><span class="badge badge-success badge-dot">Validé</span></td><td>Sarah F.</td></tr>
+                  <tr><td class="num">12:45</td><td>Eyenga Désiré</td><td>PME · Bafia</td><td><span class="badge badge-success badge-dot">Validé</span></td><td>Sarah F.</td></tr>
+                  <tr><td class="num">11:30</td><td>Kamga Joël</td><td>PME · Bafoussam</td><td><span class="badge badge-warning badge-dot">Complément demandé</span></td><td>Patrice O.</td></tr>
+                  <tr><td class="num">10:14</td><td>Senegal Naturel SARL</td><td>Acheteur · SEN</td><td><span class="badge badge-success badge-dot">Validé</span></td><td>Patrice O.</td></tr>
+                  <tr><td class="num">09:02</td><td>Faux Profil 09</td><td>PME · suspect</td><td><span class="badge badge-danger badge-dot">Rejeté</span></td><td>Sarah F.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <div class="panel-head"><h4>Stats KYC · Mai 2026</h4></div>
+              <div class="stat-list">
+                <div class="row success"><span>Validés ce mois</span><b>47</b></div>
+                <div class="row warning"><span>En attente</span><b>3</b></div>
+                <div class="row danger"><span>Rejetés ce mois</span><b>2</b></div>
+                <div class="row"><span>Taux d'acceptation</span><b>94%</b></div>
+                <div class="row"><span>Temps de validation moy.</span><b>6,2 h</b></div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top: 16px;">
+              <div class="panel-head"><h4>Documents requis</h4></div>
+              <div class="stat-list" style="font-size: 12.5px;">
+                <div class="row"><span>RCCM (PME)</span><span style="color: var(--ink-500);">obligatoire</span></div>
+                <div class="row"><span>Pièce d'identité</span><span style="color: var(--ink-500);">obligatoire</span></div>
+                <div class="row"><span>Selfie</span><span style="color: var(--ink-500);">obligatoire</span></div>
+                <div class="row"><span>Certificat d'incorporation (Acheteur)</span><span style="color: var(--ink-500);">obligatoire</span></div>
+                <div class="row"><span>Justificatif bancaire</span><span style="color: var(--ink-500);">si > 5M FCFA</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== ESCROW ============== -->
+      <div class="view" id="view-escrow" data-screen-label="03 Escrow">
+        <div class="page-head">
+          <div>
+            <h1>Supervision Escrow</h1>
+            <p>5 transactions actives · Volume bloqué : 5 450 000 FCFA</p>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost btn-sm">Filtre · Tous statuts</button>
+            <button class="btn btn-ghost btn-sm">Filtre · 3 corridors</button>
+            <button class="btn btn-primary btn-sm">Exporter Excel</button>
+          </div>
+        </div>
+
+        <div class="kpis" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="kpi"><div class="label">En transit</div><div class="value">3</div><div class="delta muted">2,4M FCFA bloqués</div></div>
+          <div class="kpi"><div class="label">Escrow confirmé</div><div class="value">2</div><div class="delta muted">1,5M FCFA</div></div>
+          <div class="kpi"><div class="label">Libération en cours</div><div class="value">1</div><div class="delta muted">1,4M FCFA</div></div>
+          <div class="kpi"><div class="label">Litiges ouverts</div><div class="value" style="color: var(--success-500);">0</div><div class="delta">— sain</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h4>Transactions actives</h4>
+            <span class="meta">Mise à jour il y a 12 sec</span>
+          </div>
+          <table class="tf">
+            <thead><tr><th>ID</th><th>Produit</th><th>Corridor</th><th>Montant</th><th>Statut</th><th>Risk</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="id">TF-2024-0847</span></td>
+                <td><div class="name" style="font-size:13px; font-weight:500;">Plantain séché<small style="display:block; font-size:11px; color:var(--ink-500);">500 kg</small></div></td>
+                <td><span class="badge badge-navy">CMR → CIV</span></td>
+                <td class="num">1 550 000 FCFA</td>
+                <td><span class="badge badge-warning badge-dot">En transit</span></td>
+                <td><span class="risk md">32</span></td>
+                <td class="actions-cell">
+                  <button class="btn-mini btn-validate">Libérer</button>
+                  <button class="btn-mini" style="background:#fff; border:1px solid var(--border); color:var(--ink-700);">Litige</button>
+                  <button class="icon-pill">→</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="id">TF-2024-0851</span></td>
+                <td><div class="name" style="font-size:13px; font-weight:500;">Gingembre bio<small style="display:block; font-size:11px; color:var(--ink-500);">200 kg</small></div></td>
+                <td><span class="badge badge-navy">CMR → SEN</span></td>
+                <td class="num">960 000 FCFA</td>
+                <td><span class="badge badge-success badge-dot">Escrow confirmé</span></td>
+                <td><span class="risk lo">18</span></td>
+                <td class="actions-cell">
+                  <button class="btn-mini btn-validate">Libérer</button>
+                  <button class="btn-mini" style="background:#fff; border:1px solid var(--border); color:var(--ink-700);">Litige</button>
+                  <button class="icon-pill">→</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="id">TF-2024-0863</span></td>
+                <td><div class="name" style="font-size:13px; font-weight:500;">Huile de palme<small style="display:block; font-size:11px; color:var(--ink-500);">1 200 L</small></div></td>
+                <td><span class="badge badge-navy">CMR → GAB</span></td>
+                <td class="num">1 440 000 FCFA</td>
+                <td><span class="badge badge-success badge-dot">Libération en cours</span></td>
+                <td><span class="risk lo">12</span></td>
+                <td class="actions-cell">
+                  <button class="btn-mini" style="background:#fff; border:1px solid var(--border); color:var(--ink-700);">Voir</button>
+                  <button class="icon-pill">→</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="id">TF-2024-0871</span></td>
+                <td><div class="name" style="font-size:13px; font-weight:500;">Plantain séché<small style="display:block; font-size:11px; color:var(--ink-500);">280 kg</small></div></td>
+                <td><span class="badge badge-navy">CMR → CIV</span></td>
+                <td class="num">880 000 FCFA</td>
+                <td><span class="badge badge-warning badge-dot">En attente expédition</span></td>
+                <td><span class="risk md">45</span></td>
+                <td class="actions-cell">
+                  <button class="btn-mini btn-complete">Relancer</button>
+                  <button class="icon-pill">→</button>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="id">TF-2024-0875</span></td>
+                <td><div class="name" style="font-size:13px; font-weight:500;">Gingembre bio<small style="display:block; font-size:11px; color:var(--ink-500);">130 kg</small></div></td>
+                <td><span class="badge badge-navy">CMR → SEN</span></td>
+                <td class="num">620 000 FCFA</td>
+                <td><span class="badge badge-dot" style="background:var(--ink-100); color:var(--ink-700);">KYC en validation</span></td>
+                <td><span class="risk lo">8</span></td>
+                <td class="actions-cell">
+                  <button class="btn-mini" style="background:#fff; border:1px solid var(--border); color:var(--ink-700);">Voir KYC</button>
+                  <button class="icon-pill">→</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============== RAG ============== -->
+      <div class="view" id="view-rag" data-screen-label="04 RAG Monitor">
+        <div class="page-head">
+          <div>
+            <h1>Monitoring RAG · Customs Navigator</h1>
+            <p>247 questions ce mois · Confiance moyenne 0,83 · 94% feedback positif</p>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost btn-sm">Filtre · Corridor</button>
+            <button class="btn btn-primary btn-sm">↻ Lancer ré-indexation</button>
+          </div>
+        </div>
+
+        <div class="rag-grid">
+          <div>
+            <div class="panel">
+              <div class="panel-head">
+                <h4>Interrogations récentes</h4>
+                <span class="meta">Top 4 — dernière heure</span>
+              </div>
+              <table class="tf">
+                <thead>
+                  <tr><th style="width:36%;">Question</th><th>Corridor</th><th>Confiance</th><th>Source citée</th><th>Feedback</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Certificat d'origine pour huile de palme vers Gabon ?</td>
+                    <td><span class="badge badge-navy">CMR → GAB</span></td>
+                    <td><div class="confidence-bar"><div class="bar"><div style="width:91%;"></div></div>0,91</div></td>
+                    <td><span class="source-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>Règl. CEMAC 01/19</span></td>
+                    <td><span class="feedback">👍</span></td>
+                  </tr>
+                  <tr>
+                    <td>Droits de douane gingembre vers Sénégal ZLECAf ?</td>
+                    <td><span class="badge badge-navy">CMR → SEN</span></td>
+                    <td><div class="confidence-bar"><div class="bar"><div style="width:87%;"></div></div>0,87</div></td>
+                    <td><span class="source-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>JO CMR 15/01/2025</span></td>
+                    <td><span class="feedback">👍</span></td>
+                  </tr>
+                  <tr>
+                    <td>Documents phytosanitaires plantain Côte d'Ivoire ?</td>
+                    <td><span class="badge badge-navy">CMR → CIV</span></td>
+                    <td><div class="confidence-bar"><div class="bar"><div style="width:83%;"></div></div>0,83</div></td>
+                    <td><span class="source-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>MINADER Circ. 2024</span></td>
+                    <td><span class="feedback">👍</span></td>
+                  </tr>
+                  <tr>
+                    <td>Délai GUCE pour déclaration export ?</td>
+                    <td><span class="badge" style="background: var(--ink-100); color: var(--ink-700);">CMR général</span></td>
+                    <td><div class="confidence-bar warn"><div class="bar"><div style="width:79%;"></div></div>0,79</div></td>
+                    <td><span class="source-tag" style="background: var(--warning-100); color: var(--warning-700); border-color: rgba(133,79,11,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>GUCE Procédures 2025</span></td>
+                    <td><span class="feedback">👎</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="sec-h"><h3>Couverture par base vectorielle</h3></div>
+            <div class="panel">
+              <div class="stat-list">
+                <div class="row success"><span>JO Cameroun · 2024-2025</span><b>1 247 chunks</b></div>
+                <div class="row success"><span>Règl. CEMAC · 2018-2024</span><b>892 chunks</b></div>
+                <div class="row success"><span>Codes douaniers ZLECAf</span><b>418 chunks</b></div>
+                <div class="row warning"><span>JO Sénégal · 2025</span><b>72 chunks · à compléter</b></div>
+                <div class="row success"><span>Procédures GUCE</span><b>309 chunks</b></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <div class="panel-head"><h4>Alertes qualité</h4></div>
+              <div class="alerts">
+                <div class="alert-row">
+                  <div class="ico warning"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></div>
+                  <div class="body">
+                    <p><b>3 questions sans chunks pertinents</b></p>
+                    <small>Cette semaine · Vérifier couverture JO Sénégal Q1 2026</small>
+                  </div>
+                </div>
+                <div class="alert-row">
+                  <div class="ico danger"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 22h20L12 2z"/></svg></div>
+                  <div class="body">
+                    <p><b>1 feedback 👎</b> · GUCE Procédures</p>
+                    <small>Réponse jugée incomplète sur les délais déclaration</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top: 16px;">
+              <div class="panel-head"><h4>Métriques RAG · Mai 2026</h4></div>
+              <div class="stat-list">
+                <div class="row"><span>Questions ce mois</span><b>247</b></div>
+                <div class="row"><span>Confiance moyenne</span><b>0,83</b></div>
+                <div class="row success"><span>Feedback positif</span><b>94%</b></div>
+                <div class="row"><span>Temps réponse moy.</span><b>1,8 s</b></div>
+                <div class="row"><span>Top corridor</span><b>CMR → CIV</b></div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top: 16px;">
+              <div class="panel-head"><h4>Actions admin</h4></div>
+              <div class="alerts">
+                <div class="alert-row">
+                  <div class="ico info"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div>
+                  <div class="body">
+                    <p><b>Ré-indexation</b></p>
+                    <small>Force la mise à jour de la base pgvector — durée : ~6 min</small>
+                    <a href="#">Lancer maintenant →</a>
+                  </div>
+                </div>
+                <div class="alert-row">
+                  <div class="ico info"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/></svg></div>
+                  <div class="body">
+                    <p><b>Ajouter une source</b></p>
+                    <small>PDF, texte, ou URL JO officiel</small>
+                    <a href="#">Importer →</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== Placeholders pour autres vues ============== -->
+      <div class="view" id="view-fraud" data-screen-label="Fraude">
+        <div class="page-head"><div><h1>Détection Fraude</h1><p>Modèle Isolation Forest · 1 alerte active</p></div></div>
+        <div class="placeholder"><h3>Module en développement</h3><p>Affichage des transactions flaggées par l'algorithme Isolation Forest, avec score de risque détaillé et actions de modération.</p></div>
+      </div>
+      <div class="view" id="view-metrics" data-screen-label="Métriques">
+        <div class="page-head"><div><h1>Métriques Plateforme</h1><p>Analytics consolidées</p></div></div>
+        <div class="placeholder"><h3>Tableau analytics complet</h3><p>Funnel d'inscription, cohortes PME, MRR/ARR, NPS, Net Revenue Retention.</p></div>
+      </div>
+      <div class="view" id="view-users" data-screen-label="Utilisateurs">
+        <div class="page-head"><div><h1>Gestion Utilisateurs</h1><p>Profils, rôles, permissions</p></div></div>
+        <div class="placeholder"><h3>Annuaire complet</h3><p>Liste filtrable de tous les profils PME, acheteurs et agents avec leurs Trust Scores et historiques.</p></div>
+      </div>
+      <div class="view" id="view-settings" data-screen-label="Paramètres">
+        <div class="page-head"><div><h1>Paramètres Système</h1><p>Configuration plateforme</p></div></div>
+        <div class="placeholder"><h3>Configuration globale</h3><p>Frais transaction, seuils Trust Score, intégrations API, équipe LA RUCHE.</p></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Routing client : sidebar + back/forward
+  (function() {
+    const links = document.querySelectorAll('.side a[data-view]');
+    const views = document.querySelectorAll('.view');
+    const crumb = document.getElementById('crumb');
+
+    function setActive(name) {
+      links.forEach(l => l.classList.toggle('active', l.dataset.view === name));
+      views.forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+      const active = document.querySelector('.side a[data-view="' + name + '"]');
+      if (active) crumb.textContent = active.textContent.trim().replace(/\s+\d+$/, '');
+      window.scrollTo(0, 0);
+    }
+
+    function fromHash() {
+      const name = (location.hash || '#overview').replace('#', '').trim();
+      const valid = Array.from(views).some(v => v.id === 'view-' + name);
+      setActive(valid ? name : 'overview');
+    }
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-view]');
+      if (!a) return;
+      e.preventDefault();
+      location.hash = '#' + a.dataset.view;
+    });
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   TradeFlow Africa — Design tokens
+   Charte officielle. Partagée entre les 4 interfaces web.
+   ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Bleu Navy (autorité institutionnelle) */
+  --navy-900: #0E2E55;
+  --navy-700: #1B4D8E;   /* primaire */
+  --navy-500: #2E6DA4;   /* secondaire */
+  --navy-200: #D6E8F7;   /* fond, hover */
+  --navy-100: #EBF4FF;   /* sidebar active */
+  --navy-50:  #F4F8FC;
+
+  /* Orange (accent rare, action) */
+  --orange-700: #C95E0E;
+  --orange-500: #E87722;  /* CTA, badge */
+  --orange-300: #F5A55B;  /* accent secondaire */
+  --orange-100: #FBE8D5;
+
+  /* Status */
+  --success-500: #27AE60;
+  --success-100: #EAF3DE;
+  --success-700: #3B6D11;
+
+  --danger-500: #E24B4A;
+  --danger-100: #FCEBEB;
+  --danger-700: #A32D2D;
+
+  --warning-500: #E67E22;
+  --warning-100: #FAEEDA;
+  --warning-700: #854F0B;
+
+  /* Neutres */
+  --ink-900: #1A1A1A;
+  --ink-700: #4A4A4A;
+  --ink-500: #6B7280;
+  --ink-400: #888888;
+  --ink-300: #B5BCC5;
+  --ink-200: #E5E7EB;
+  --ink-100: #EEF1F5;
+
+  --surface: #F5F7FA;
+  --canvas: #FFFFFF;
+
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.14);
+
+  /* Typo */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-num: "Inter", ui-monospace, "SF Mono", monospace; /* tabular numerals */
+
+  /* Rayon, ombres, espace */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .04);
+  --shadow-md: 0 1px 3px rgba(15, 23, 42, .06), 0 0 0 0.5px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(15, 23, 42, .08), 0 0 0 0.5px rgba(0,0,0,0.04);
+
+  /* Conteneur */
+  --container: 1200px;
+  --pad-x: 24px;
+
+  /* Variables tweakables (Tweaks panel les met à jour) */
+  --c-primary: var(--navy-700);
+  --c-primary-strong: var(--navy-900);
+  --c-accent: var(--orange-500);
+}
+
+/* Reset minimal */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--ink-900);
+  background: var(--canvas);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: default; }
+
+/* Typo helpers */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-primary);
+}
+.lead { font-size: 18px; line-height: 1.65; color: var(--ink-700); }
+.caption { font-size: 13px; color: var(--ink-400); }
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Conteneur */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: var(--r-md);
+  font-size: 15px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  white-space: nowrap;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.btn-primary { background: var(--c-primary); color: #fff; }
+.btn-primary:hover { background: var(--navy-500); }
+.btn-accent { background: var(--c-accent); color: #fff; }
+.btn-accent:hover { background: var(--orange-700); }
+.btn-ghost { background: transparent; color: var(--c-primary); border-color: currentColor; }
+.btn-ghost:hover { background: var(--navy-100); }
+.btn-ghost-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); }
+.btn-ghost-light:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.85); }
+.btn-sm { height: 36px; padding: 0 14px; font-size: 13px; border-radius: var(--r-sm); }
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--ink-100);
+  color: var(--ink-700);
+}
+.badge-navy { background: var(--navy-200); color: var(--navy-700); }
+.badge-orange { background: var(--orange-100); color: var(--orange-700); }
+.badge-success { background: var(--success-100); color: var(--success-700); }
+.badge-danger { background: var(--danger-100); color: var(--danger-700); }
+.badge-warning { background: var(--warning-100); color: var(--warning-700); }
+.badge-dot::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; opacity: .85;
+}
+
+/* Card */
+.card {
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.card-flat {
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: 16px;
+}
+
+/* Ligne fine de séparation */
+.hr { height: 1px; background: var(--border); border: 0; margin: 0; }
+
+/* Scrollbar fine pour les dashboards */
+.thin-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: var(--ink-200); border-radius: 4px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }

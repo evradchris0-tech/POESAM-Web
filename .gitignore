@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.env*.local
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Large media — host separately
+public/*.mp4
+public/*.mov
+public/*.zip

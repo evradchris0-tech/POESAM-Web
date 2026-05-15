@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply font-sans text-ink-900 bg-white antialiased;
+    font-feature-settings: "cv11", "ss01", "ss03";
+  }
+  body {
+    text-rendering: optimizeLegibility;
+  }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+  .container-tf { @apply mx-auto px-6 max-w-container; }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-navy;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+}
+
+/* Subtle in-view animation primitive */
+.fade-up {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.fade-up.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Corridor pulse on the Africa map */
+@keyframes corridor-dash {
+  to { stroke-dashoffset: -24; }
+}
+.corridor-line {
+  stroke-dasharray: 6 6;
+  animation: corridor-dash 2.4s linear infinite;
+}
+.corridor-line.paused { animation: none; }
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.08); }
+}
+.pulse-soft { animation: pulse-soft 2.6s ease-in-out infinite; transform-origin: center; }
+
+/* Route entry transition (Stripe-like fade-in) */
+@keyframes route-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.route-fade > * {
+  animation: route-fade-in 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Skeleton shimmer */
+@keyframes skeleton-shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #EEF1F5 0%, #F6F7F9 50%, #EEF1F5 100%);
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
