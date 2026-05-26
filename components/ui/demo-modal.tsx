@@ -50,7 +50,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
       />
 
       {/* Conteneur vidéo */}
-      <div className="relative z-10 w-full max-w-5xl mx-4 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative z-10 w-full max-w-5xl mx-4" style={{ animation: "demoSlideIn 200ms ease-out" }}>
         {/* Barre titre */}
         <div className="flex items-center justify-between px-4 py-3 bg-[#0A2342] rounded-t-xl border border-white/10 border-b-0">
           <div className="flex items-center gap-3">
@@ -75,8 +75,8 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
             ref={videoRef}
             src="/ProjetPOESAM.mp4"
             controls
-            autoPlay
             playsInline
+            preload="metadata"
             className="w-full max-h-[75vh] object-contain"
             style={{ display: "block" }}
           >
