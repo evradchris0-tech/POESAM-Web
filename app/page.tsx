@@ -137,7 +137,7 @@ export default function LandingPage() {
               <div className="px-6 py-4 bg-surface border-b border-black/[0.08] flex items-center justify-between gap-3">
                 <div>
                   <div className="text-xs font-semibold text-ink-900 tracking-tight">Sucre de canne</div>
-                  <div className="text-[11px] text-ink-400 font-medium">1er semestre 2024</div>
+                  <div className="text-[11px] text-ink-400 font-medium">Année 2023 · INS Cameroun</div>
                 </div>
                 <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-semibold bg-danger-100 text-danger-700">
                   Paradoxe CEMAC
@@ -147,15 +147,16 @@ export default function LandingPage() {
                 {/* Gauche — achat hors Afrique */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between bg-danger-100/25">
                   <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
-                    Cameroun ← Brésil & Europe
+                    Cameroun ← Brésil & Inde (prix subventionnés)
                   </div>
                   <div>
                     <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-danger-500">
-                      42,8
+                      82,67
                     </div>
-                    <div className="text-lg font-semibold text-ink-700 mt-0.5">Mds FCFA</div>
+                    <div className="text-lg font-semibold text-ink-700 mt-0.5">Mds FCFA en 2023</div>
                     <div className="text-xs text-ink-500 mt-2 leading-relaxed">
-                      105 400 tonnes importées par bateau<br />depuis Santos (BR) et ports européens
+                      224 003 tonnes importées<br />
+                      <span className="text-ink-400">(H1 2024 : 105 400 t · 42,8 Mds FCFA — Min. Finances)</span>
                     </div>
                   </div>
                 </div>
@@ -172,16 +173,17 @@ export default function LandingPage() {
                     <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-ink-300">
                       ≈ 0
                     </div>
-                    <div className="text-lg font-semibold text-ink-400 mt-0.5">FCFA</div>
+                    <div className="text-lg font-semibold text-ink-400 mt-0.5">FCFA vers Cameroun</div>
                     <div className="text-xs text-ink-500 mt-2 leading-relaxed">
-                      Surproduction structurelle non adressée<br />Excédents réexportés vers d'autres continents
+                      SARIS produit ~69 500 t/campagne 2024<br />
+                      <span className="text-ink-400">Exporte vers Gabon & Europe — quasi-rien vers le Cameroun voisin</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="px-6 py-3 border-t border-black/[0.08] bg-surface text-[11px] text-ink-400 flex items-center gap-2">
-                <span className="font-semibold text-ink-600">Source :</span>
-                INS Cameroun — Bulletins du Commerce Extérieur · 2024
+                <span className="font-semibold text-ink-600">Sources :</span>
+                INS Cameroun · Ministère des Finances · ACI Congo (Agence Congolaise d'Information)
               </div>
             </div>
 
@@ -189,26 +191,27 @@ export default function LandingPage() {
             <div className="border border-black/[0.08] rounded-xl overflow-hidden flex flex-col">
               <div className="px-6 py-4 bg-surface border-b border-black/[0.08] flex items-center justify-between gap-3">
                 <div>
-                  <div className="text-xs font-semibold text-ink-900 tracking-tight">Clinker — matière première ciment</div>
-                  <div className="text-[11px] text-ink-400 font-medium">Données annuelles</div>
+                  <div className="text-xs font-semibold text-ink-900 tracking-tight">Clinker — matière première du ciment</div>
+                  <div className="text-[11px] text-ink-400 font-medium">Année 2023 · INS Cameroun</div>
                 </div>
                 <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-semibold bg-success-100 text-success-700">
-                  Correction en cours ✓
+                  Correction amorcée ↑
                 </span>
               </div>
               <div className="grid grid-cols-[1fr_28px_1fr] flex-1">
-                {/* Gauche — achat hors Afrique */}
+                {/* Gauche — total importé toutes origines */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between bg-danger-100/25">
                   <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
-                    Cameroun ← Europe & Asie
+                    Total importé · toutes origines
                   </div>
                   <div>
                     <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-danger-500">
-                      ~1,5 M
+                      2,41 M
                     </div>
-                    <div className="text-lg font-semibold text-ink-700 mt-0.5">tonnes / an</div>
+                    <div className="text-lg font-semibold text-ink-700 mt-0.5">tonnes · 87,7 Mds FCFA</div>
                     <div className="text-xs text-ink-500 mt-2 leading-relaxed">
-                      Flux historique dominant — des dizaines<br />de milliards de FCFA fuyant le continent
+                      En 2023 (INS Cameroun)<br />
+                      <span className="text-ink-400">Europe, Asie et Nigéria comme sources principales</span>
                     </div>
                   </div>
                 </div>
@@ -216,25 +219,26 @@ export default function LandingPage() {
                 <div className="flex items-center justify-center border-x border-black/[0.08] bg-white text-[10px] font-bold text-ink-300 tracking-[0.16em] [writing-mode:vertical-rl]">
                   VS
                 </div>
-                {/* Droite — voisin africain en croissance */}
+                {/* Droite — part africaine (Dangote) en croissance */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between bg-white">
                   <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
-                    Cameroun ← Nigéria (Dangote)
+                    Part Nigéria · Dangote (en hausse)
                   </div>
                   <div>
                     <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-success-700">
-                      970 100
+                      ~906k
                     </div>
-                    <div className="text-lg font-semibold text-success-700 mt-0.5">tonnes importées</div>
+                    <div className="text-lg font-semibold text-success-700 mt-0.5">tonnes en 2024</div>
                     <div className="text-xs text-ink-500 mt-2 leading-relaxed">
-                      Import régional en forte croissance<br />TradeFlow accélère cette bascule
+                      Exportées du Nigéria vers Cameroun + Ghana<br />
+                      <span className="text-ink-400">Usine Dangote à Douala : 1,5 Mt/an · ouverte 2015</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="px-6 py-3 border-t border-black/[0.08] bg-surface text-[11px] text-ink-400 flex items-center gap-2">
-                <span className="font-semibold text-ink-600">Source :</span>
-                INS Cameroun — Commerce Extérieur & rapports sectoriels · 2024
+                <span className="font-semibold text-ink-600">Sources :</span>
+                INS Cameroun · Business in Cameroon · Dangote Cement FY2024 Results
               </div>
             </div>
 
@@ -243,30 +247,44 @@ export default function LandingPage() {
           {/* Résumé chiffré — table synthèse */}
           <div className="bg-[#0A2342] text-white rounded-xl overflow-hidden mb-14">
             <div className="px-6 py-4 border-b border-white/10">
-              <h4 className="text-sm font-semibold text-white/80">Ce que ces deux cas révèlent — en chiffres officiels INS Cameroun</h4>
+              <h4 className="text-sm font-semibold text-white/80">Deux cas documentés — chiffres officiels vérifiés</h4>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm min-w-[540px]">
+              <table className="w-full text-sm min-w-[580px]">
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Produit</th>
-                    <th className="text-right px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-danger-500">Acheté hors d'Afrique</th>
-                    <th className="text-right px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Acheté au voisin africain</th>
-                    <th className="text-left px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Ce que TradeFlow résout</th>
+                    <th className="text-right px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-danger-500">Volume & valeur importés</th>
+                    <th className="text-right px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Voisin africain producteur</th>
+                    <th className="text-left px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/30">Source</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-white/[0.06]">
-                    <td className="px-6 py-4 font-semibold">Sucre <small className="text-white/40 font-normal">(1er sem. 2024)</small></td>
-                    <td className="px-6 py-4 text-right tabular font-semibold text-danger-500">42,8 Mds FCFA <small className="text-white/40 font-normal block text-xs">Brésil & Europe</small></td>
-                    <td className="px-6 py-4 text-right tabular text-white/40">≈ 0 FCFA <small className="block text-xs">Congo-Brazzaville (SARIS)</small></td>
-                    <td className="px-6 py-4 text-white/60 text-xs">Courtage numérique + escrow CEMAC</td>
+                    <td className="px-6 py-4 font-semibold">
+                      Sucre <small className="text-white/40 font-normal">(2023)</small>
+                    </td>
+                    <td className="px-6 py-4 text-right tabular font-semibold text-danger-500">
+                      224 003 t · 82,67 Mds FCFA
+                      <small className="text-white/40 font-normal block text-xs mt-0.5">Brésil & Inde · prix subventionnés</small>
+                    </td>
+                    <td className="px-6 py-4 text-right tabular text-white/40 text-xs">
+                      SARIS Congo : ~69 500 t/an<br />Flux vers Cameroun : quasi inexistant
+                    </td>
+                    <td className="px-6 py-4 text-white/30 text-xs">INS Cameroun<br />Min. Finances · ACI Congo</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-semibold">Clinker <small className="text-white/40 font-normal">(annuel)</small></td>
-                    <td className="px-6 py-4 text-right tabular font-semibold text-danger-500">~1,5 M tonnes <small className="text-white/40 font-normal block text-xs">Europe & Asie</small></td>
-                    <td className="px-6 py-4 text-right tabular text-success-500">970 100 t <small className="block text-xs text-white/40">Nigéria (Dangote) ↑</small></td>
-                    <td className="px-6 py-4 text-white/60 text-xs">Accélérer la bascule déjà amorcée</td>
+                    <td className="px-6 py-4 font-semibold">
+                      Clinker <small className="text-white/40 font-normal">(2023)</small>
+                    </td>
+                    <td className="px-6 py-4 text-right tabular font-semibold text-danger-500">
+                      2 411 855 t · 87,7 Mds FCFA
+                      <small className="text-white/40 font-normal block text-xs mt-0.5">Toutes origines — Europe, Asie & Nigéria</small>
+                    </td>
+                    <td className="px-6 py-4 text-right tabular text-success-500 text-xs">
+                      Dangote Nigeria : ~906k t<br />(vers CMR + Ghana · 2024) ↑
+                    </td>
+                    <td className="px-6 py-4 text-white/30 text-xs">INS Cameroun<br />Dangote FY2024</td>
                   </tr>
                 </tbody>
               </table>
