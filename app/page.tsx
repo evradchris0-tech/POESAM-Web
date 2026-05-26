@@ -118,46 +118,158 @@ export default function LandingPage() {
       <section id="probleme" className="py-24 lg:py-28">
         <div className="container-tf">
           <div className="max-w-3xl mb-16">
-            <span className="eyebrow">Le problème</span>
+            <span className="eyebrow">Le problème · Source INS Cameroun</span>
             <h2 className="text-4xl lg:text-[44px] font-semibold leading-tight tracking-tight mt-3 mb-5 text-balance">
               L'argent africain quitte l'Afrique.
             </h2>
             <p className="text-lg text-ink-700 leading-relaxed">
-              Même produit. Même qualité. Pas d'infrastructure numérique. La Côte d'Ivoire achète
-              au Maroc ce qu'elle pourrait acheter au Cameroun pour mille fois moins.
+              Même monnaie. Même zone économique CEMAC. Pourtant, le Cameroun achète au Brésil et
+              en Europe ce que ses voisins africains produisent en surplus — faute d'un marché
+              numérique entre eux.
             </p>
           </div>
 
-          {/* Paradoxe */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] border border-black/[0.08] rounded-xl overflow-hidden mb-14">
-            <div className="p-12 bg-surface">
-              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-400 mb-4">
-                Côte d'Ivoire ← Maroc · 2024
+          {/* Les deux paradoxes — données INS Cameroun officielles */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-14">
+
+            {/* Paradoxe 1 : Sucre */}
+            <div className="border border-black/[0.08] rounded-xl overflow-hidden flex flex-col">
+              <div className="px-6 py-4 bg-surface border-b border-black/[0.08] flex items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs font-semibold text-ink-900 tracking-tight">Sucre de canne</div>
+                  <div className="text-[11px] text-ink-400 font-medium">1er semestre 2024</div>
+                </div>
+                <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-semibold bg-danger-100 text-danger-700">
+                  Paradoxe CEMAC
+                </span>
               </div>
-              <div className="text-[56px] font-bold leading-none tracking-tight tabular text-ink-900 mb-3">
-                32 Mds <span className="text-[28px] text-ink-500">FCFA</span>
+              <div className="grid grid-cols-[1fr_28px_1fr] flex-1">
+                {/* Gauche — achat hors Afrique */}
+                <div className="p-6 sm:p-8 flex flex-col justify-between bg-danger-100/25">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
+                    Cameroun ← Brésil & Europe
+                  </div>
+                  <div>
+                    <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-danger-500">
+                      42,8
+                    </div>
+                    <div className="text-lg font-semibold text-ink-700 mt-0.5">Mds FCFA</div>
+                    <div className="text-xs text-ink-500 mt-2 leading-relaxed">
+                      105 400 tonnes importées par bateau<br />depuis Santos (BR) et ports européens
+                    </div>
+                  </div>
+                </div>
+                {/* Séparateur */}
+                <div className="flex items-center justify-center border-x border-black/[0.08] bg-white text-[10px] font-bold text-ink-300 tracking-[0.16em] [writing-mode:vertical-rl]">
+                  VS
+                </div>
+                {/* Droite — voisin africain ignoré */}
+                <div className="p-6 sm:p-8 flex flex-col justify-between bg-white">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
+                    Cameroun ← Congo-Brazzaville (SARIS)
+                  </div>
+                  <div>
+                    <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-ink-300">
+                      ≈ 0
+                    </div>
+                    <div className="text-lg font-semibold text-ink-400 mt-0.5">FCFA</div>
+                    <div className="text-xs text-ink-500 mt-2 leading-relaxed">
+                      Surproduction structurelle non adressée<br />Excédents réexportés vers d'autres continents
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p className="text-ink-700 leading-relaxed">
-                Importations annuelles de plantain séché et dérivés. Frais portuaires, devise
-                tierce, intermédiaires multiples.
-              </p>
+              <div className="px-6 py-3 border-t border-black/[0.08] bg-surface text-[11px] text-ink-400 flex items-center gap-2">
+                <span className="font-semibold text-ink-600">Source :</span>
+                INS Cameroun — Bulletins du Commerce Extérieur · 2024
+              </div>
             </div>
-            <div
-              className="grid place-items-center lg:w-14 lg:border-x border-y lg:border-y-0 border-black/[0.08] bg-white text-ink-400 text-[11px] font-bold tracking-[0.16em] py-3 lg:py-0"
-            >
-              VS
+
+            {/* Paradoxe 2 : Clinker */}
+            <div className="border border-black/[0.08] rounded-xl overflow-hidden flex flex-col">
+              <div className="px-6 py-4 bg-surface border-b border-black/[0.08] flex items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs font-semibold text-ink-900 tracking-tight">Clinker — matière première ciment</div>
+                  <div className="text-[11px] text-ink-400 font-medium">Données annuelles</div>
+                </div>
+                <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-semibold bg-success-100 text-success-700">
+                  Correction en cours ✓
+                </span>
+              </div>
+              <div className="grid grid-cols-[1fr_28px_1fr] flex-1">
+                {/* Gauche — achat hors Afrique */}
+                <div className="p-6 sm:p-8 flex flex-col justify-between bg-danger-100/25">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
+                    Cameroun ← Europe & Asie
+                  </div>
+                  <div>
+                    <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-danger-500">
+                      ~1,5 M
+                    </div>
+                    <div className="text-lg font-semibold text-ink-700 mt-0.5">tonnes / an</div>
+                    <div className="text-xs text-ink-500 mt-2 leading-relaxed">
+                      Flux historique dominant — des dizaines<br />de milliards de FCFA fuyant le continent
+                    </div>
+                  </div>
+                </div>
+                {/* Séparateur */}
+                <div className="flex items-center justify-center border-x border-black/[0.08] bg-white text-[10px] font-bold text-ink-300 tracking-[0.16em] [writing-mode:vertical-rl]">
+                  VS
+                </div>
+                {/* Droite — voisin africain en croissance */}
+                <div className="p-6 sm:p-8 flex flex-col justify-between bg-white">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-500 mb-4 leading-snug">
+                    Cameroun ← Nigéria (Dangote)
+                  </div>
+                  <div>
+                    <div className="text-[42px] sm:text-[52px] font-bold leading-none tracking-tight tabular text-success-700">
+                      970 100
+                    </div>
+                    <div className="text-lg font-semibold text-success-700 mt-0.5">tonnes importées</div>
+                    <div className="text-xs text-ink-500 mt-2 leading-relaxed">
+                      Import régional en forte croissance<br />TradeFlow accélère cette bascule
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="px-6 py-3 border-t border-black/[0.08] bg-surface text-[11px] text-ink-400 flex items-center gap-2">
+                <span className="font-semibold text-ink-600">Source :</span>
+                INS Cameroun — Commerce Extérieur & rapports sectoriels · 2024
+              </div>
             </div>
-            <div className="p-12 bg-white">
-              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-400 mb-4">
-                Côte d'Ivoire ← Cameroun · 2024
-              </div>
-              <div className="text-[56px] font-bold leading-none tracking-tight tabular text-danger-500 mb-3">
-                9,55 M <span className="text-[28px] text-ink-500">FCFA</span>
-              </div>
-              <p className="text-ink-700 leading-relaxed">
-                Sur le même produit. Pas par manque de demande. Par manque d'infrastructure
-                numérique entre voisins.
-              </p>
+
+          </div>
+
+          {/* Résumé chiffré — table synthèse */}
+          <div className="bg-[#0A2342] text-white rounded-xl overflow-hidden mb-14">
+            <div className="px-6 py-4 border-b border-white/10">
+              <h4 className="text-sm font-semibold text-white/80">Ce que ces deux cas révèlent — en chiffres officiels INS Cameroun</h4>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm min-w-[540px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="text-left px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Produit</th>
+                    <th className="text-right px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-danger-500">Acheté hors d'Afrique</th>
+                    <th className="text-right px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Acheté au voisin africain</th>
+                    <th className="text-left px-6 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Ce que TradeFlow résout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-white/[0.06]">
+                    <td className="px-6 py-4 font-semibold">Sucre <small className="text-white/40 font-normal">(1er sem. 2024)</small></td>
+                    <td className="px-6 py-4 text-right tabular font-semibold text-danger-500">42,8 Mds FCFA <small className="text-white/40 font-normal block text-xs">Brésil & Europe</small></td>
+                    <td className="px-6 py-4 text-right tabular text-white/40">≈ 0 FCFA <small className="block text-xs">Congo-Brazzaville (SARIS)</small></td>
+                    <td className="px-6 py-4 text-white/60 text-xs">Courtage numérique + escrow CEMAC</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 font-semibold">Clinker <small className="text-white/40 font-normal">(annuel)</small></td>
+                    <td className="px-6 py-4 text-right tabular font-semibold text-danger-500">~1,5 M tonnes <small className="text-white/40 font-normal block text-xs">Europe & Asie</small></td>
+                    <td className="px-6 py-4 text-right tabular text-success-500">970 100 t <small className="block text-xs text-white/40">Nigéria (Dangote) ↑</small></td>
+                    <td className="px-6 py-4 text-white/60 text-xs">Accélérer la bascule déjà amorcée</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -165,15 +277,15 @@ export default function LandingPage() {
             {[
               {
                 title: "Information manquante",
-                body: "Les PME camerounaises ignorent qui achète quoi, à quel prix, dans quel pays voisin.",
+                body: "Les acheteurs camerounais ignorent qui produit quoi, à quel prix, chez le voisin. Il n'existe pas de marché numérique intégré en Afrique centrale.",
               },
               {
-                title: "Douanes incompréhensibles",
-                body: "Procédures fragmentées entre CEMAC, CEDEAO, ZLECAf. Une erreur de document = amende ou blocage.",
+                title: "Logistique et douanes",
+                body: "Acheminer des tonnes depuis Brazzaville coûte plus cher que depuis Santos au Brésil — barrières routières et tracasseries douanières incluses.",
               },
               {
-                title: "Paiement impossible",
-                body: "Sans escrow ni rails interbancaires africains, l'acheteur paie par virement euro/dollar — ou pas du tout.",
+                title: "Paiement sans infrastructure",
+                body: "Sans escrow ni rails interbancaires africains, même les voisins CEMAC à la même monnaie passent par des courtiers londoniens.",
               },
             ].map((b, i) => (
               <div
