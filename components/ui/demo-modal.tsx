@@ -73,13 +73,17 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
         <div className="relative bg-black rounded-b-xl overflow-hidden shadow-2xl border border-white/10 border-t-0">
           <video
             ref={videoRef}
-            src="/ProjetPOESAM.mp4"
             controls
             playsInline
             preload="metadata"
             className="w-full max-h-[75vh] object-contain"
             style={{ display: "block" }}
           >
+            {/* Source CDN GitHub (évite les problèmes de Git LFS / taille fichier / bande passante sur Hostinger) */}
+            <source src="https://raw.githubusercontent.com/evradchris0-tech/POESAM-Web/main/public/ProjetPOESAM.mp4" type="video/mp4" />
+            {/* Sources locales de secours (développement ou offline) */}
+            <source src="/ProjetPOESAM.mp4" type="video/mp4" />
+            <source src="ProjetPOESAM.mp4" type="video/mp4" />
             Votre navigateur ne supporte pas la lecture vidéo HTML5.
           </video>
         </div>
