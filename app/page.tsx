@@ -468,13 +468,14 @@ export default function LandingPage() {
       >
         <div className="container-tf">
           <div className="max-w-3xl mb-16">
-            <span className="eyebrow">La preuve</span>
+            <span className="eyebrow">Ce que la plateforme débloque</span>
             <h2 className="text-4xl lg:text-[44px] font-semibold leading-tight tracking-tight mt-3 mb-5 text-balance">
-              3 corridors. 3 opportunités réelles. Aujourd'hui.
+              3 corridors. 3 opportunités à activer.
             </h2>
             <p className="text-lg text-ink-700 leading-relaxed">
-              Pas de promesse. Des données mesurables, des prix vérifiables, des droits de douane
-              connus. À activer dès maintenant.
+              Ces corridors existent. Les produits sont disponibles. Les droits de douane sont à
+              zéro. Ce qui manque : l'infrastructure numérique pour les connecter. C'est ce que
+              TradeFlow construit.
             </p>
           </div>
 
@@ -498,9 +499,9 @@ export default function LandingPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                   <div className="absolute top-3 right-3">
-                    <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-medium bg-white/95 text-success-700 backdrop-blur-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-success-500" />
-                      Actif
+                    <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-medium bg-white/95 text-navy backdrop-blur-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-navy" />
+                      Opportunité
                     </span>
                   </div>
                   <div className="absolute bottom-3 left-3">
@@ -515,7 +516,7 @@ export default function LandingPage() {
                   <h3 className="text-[22px] font-semibold tracking-tight mb-5">{c.product}</h3>
                   <div className="grid grid-cols-2 gap-x-6 gap-y-5 mb-3">
                     <div>
-                      <div className="text-[11px] uppercase tracking-[0.08em] text-ink-400 font-semibold">Score opportunité</div>
+                      <div className="text-[11px] uppercase tracking-[0.08em] text-ink-400 font-semibold">Score TradeFlow IA</div>
                       <div className="text-[17px] font-semibold tabular mt-1 text-ink-900">
                         {c.score}<small className="text-ink-500 font-medium text-xs ml-1">/100</small>
                       </div>
@@ -544,7 +545,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="mt-auto px-5 py-3.5 border-t border-black/[0.08] bg-white text-xs text-ink-400">
-                  Source : ITC TradeMap + INS Cameroun · 2024
+                  Simulation · Score calculé par le moteur TradeFlow IA · Droits douane : ZLECAf/CEMAC
                 </div>
               </div>
             ))}
